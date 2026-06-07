@@ -4,6 +4,11 @@ import { useFullscreen } from '../hooks/useFullscreen'
 import { useKenBurns } from '../hooks/useKenBurns'
 import { useSlideshow } from '../hooks/useSlideshow'
 import { useWakeLock } from '../hooks/useWakeLock'
+import {
+  trackSlideshowEnded,
+  trackSlideshowNavigate,
+  trackSlideshowPause,
+} from '../utils/analytics'
 import { transformToCss } from '../utils/parseOrientation'
 import { SlideControls } from './SlideControls'
 
@@ -131,33 +136,49 @@ export function Slideshow({ slides, config, onExit }: SlideshowProps) {
     })
   }, [currentIndex, currentUrl, currentSlide, activeLayer, beginTransition, setKenBurnsLayer])
 
+  const handleTogglePause = useCallback(() => {
+    trackSlideshowPause(!isPaused)
+    togglePause()
+  }, [isPaused, togglePause])
+
+  const handleNext = useCallback(() => {
+    trackSlideshowNavigate('next')
+    next()
+  }, [next])
+
+  const handlePrev = useCallback(() => {
+    trackSlideshowNavigate('prev')
+    prev()
+  }, [prev])
+
+  const handleExit = useCallback(() => {
+    trackSlideshowEnded(slidesState.length, loopCount, config.duration)
+    void exit()
+    slidesState.forEach((s) => {
+      if (s.url) URL.revokeObjectURL(s.url)
+    })
+    onExit()
+  }, [config.duration, exit, loopCount, onExit, slidesState])
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       showControls()
 
       if (e.key === ' ') {
         e.preventDefault()
-        togglePause()
+        handleTogglePause()
       } else if (e.key === 'ArrowRight') {
-        next()
+        handleNext()
       } else if (e.key === 'ArrowLeft') {
-        prev()
+        handlePrev()
       } else if (e.key === 'Escape') {
-        onExit()
+        handleExit()
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [togglePause, next, prev, onExit, showControls])
-
-  const handleExit = () => {
-    void exit()
-    slidesState.forEach((s) => {
-      if (s.url) URL.revokeObjectURL(s.url)
-    })
-    onExit()
-  }
+  }, [handleTogglePause, handleNext, handlePrev, handleExit, showControls])
 
   return (
     <div className="slideshow" onMouseMove={showControls}>
@@ -192,9 +213,9 @@ export function Slideshow({ slides, config, onExit }: SlideshowProps) {
         currentIndex={currentIndex}
         total={slidesState.length}
         loopCount={loopCount}
-        onTogglePause={togglePause}
-        onPrev={prev}
-        onNext={next}
+        onTogglePause={handleTogglePause}
+        onPrev={handlePrev}
+        onNext={handleNext}
         onExit={handleExit}
       />
     </div>

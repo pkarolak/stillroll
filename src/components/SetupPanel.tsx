@@ -14,6 +14,10 @@ import { loadSavedFolder, pickFolder } from '../utils/collectImages'
 import { naturalCompare } from '../utils/naturalSort'
 import { resolveSlideFile } from '../utils/slideSource'
 import { shuffle } from '../utils/shuffle'
+import {
+  trackFolderSelected,
+  trackSlideshowStarted,
+} from '../utils/analytics'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 type SetupPanelProps = {
@@ -39,6 +43,7 @@ export function SetupPanel({ onStart }: SetupPanelProps) {
         if (saved && saved.entries.length > 0) {
           setEntries(saved.entries)
           setFolderName(saved.folderName)
+          trackFolderSelected(saved.entries.length, 'restored')
         }
       } catch {
         // Brak zapisanego folderu lub odmowa dostępu
@@ -55,6 +60,7 @@ export function SetupPanel({ onStart }: SetupPanelProps) {
       const result = await pickFolder()
       setEntries(result.entries)
       setFolderName(result.folderName)
+      trackFolderSelected(result.entries.length, 'picker')
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') return
       setError(t.errorFolder)
@@ -84,7 +90,9 @@ export function SetupPanel({ onStart }: SetupPanelProps) {
     try {
       const file = await resolveSlideFile(slides[0])
       slides[0].url = URL.createObjectURL(file)
-      onStart(slides, { duration, order, correctOrientation })
+      const slideshowConfig = { duration, order, correctOrientation }
+      trackSlideshowStarted(slides.length, slideshowConfig)
+      onStart(slides, slideshowConfig)
     } catch {
       setError(t.errorFirstPhoto)
     } finally {

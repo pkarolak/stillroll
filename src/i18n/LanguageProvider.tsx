@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { LanguageContext, type LanguageContextValue } from './languageContext'
+import { trackLanguageChanged } from '../utils/analytics'
 import { detectLanguage, photoCount, translations } from './translations'
 import type { Language } from './types'
 
@@ -19,7 +20,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(loadLanguage)
 
   const setLanguage = useCallback((lang: Language) => {
-    setLanguageState(lang)
+    setLanguageState((prev) => {
+      if (prev !== lang) trackLanguageChanged(lang)
+      return lang
+    })
     try {
       localStorage.setItem(STORAGE_KEY, lang)
     } catch {
