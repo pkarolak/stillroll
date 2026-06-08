@@ -5,13 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "bash scripts/generate-icons.sh && tsc -b && vite build",
     "lint": "eslint .",
+    "test": "vitest run",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/plus-jakarta-sans": "^5.2.8",
     "@vercel/analytics": "^2.0.1",
     "exifr": "^7.1.3",
+    "fflate": "^0.8.3",
     "lucide-react": "^1.17.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
@@ -28,6 +31,8 @@
     "globals": "^17.6.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^4.1.8"
   }
 }

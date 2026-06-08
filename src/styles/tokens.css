@@ -1,0 +1,262 @@
+/* ── Primitives (theme-agnostic) ── */
+
+:root {
+  --ds-font-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system,
+    sans-serif;
+
+  --ds-radius-sm: 8px;
+  --ds-radius-md: 12px;
+  --ds-radius-lg: 16px;
+  --ds-radius-full: 999px;
+
+  --ds-border-width: 1px;
+  --ds-inset-tight: var(--ds-space-1);
+  --ds-inset-comfort: var(--ds-space-2);
+  --ds-radius-inner-tight: calc(var(--ds-radius-md) - var(--ds-inset-tight));
+  --ds-radius-inner-comfort: calc(var(--ds-radius-lg) - var(--ds-inset-comfort));
+  --ds-radius-flat-segment: calc(var(--ds-radius-sm) - var(--ds-border-width));
+
+  --ds-space-1: 0.25rem;
+  --ds-space-2: 0.5rem;
+  --ds-space-3: 0.75rem;
+  --ds-space-4: 1rem;
+  --ds-space-5: 1.25rem;
+  --ds-space-6: 1.5rem;
+  --ds-space-8: 2rem;
+
+  --ds-text-xs: 0.68rem;
+  --ds-text-sm: 0.78rem;
+  --ds-text-md: 0.875rem;
+  --ds-text-lg: 1rem;
+
+  --ds-accent-400: #5eead4;
+  --ds-accent-500: #2dbcb0;
+  --ds-accent-600: #1a8f95;
+  --ds-accent-700: #0f6b72;
+
+  --ds-transition-fast: 150ms ease;
+}
+
+/* ── Dark theme (default) ── */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --ds-color-bg: #0a1c26;
+  --ds-color-bg-deep: #061218;
+  --ds-color-bg-glow: rgba(45, 212, 191, 0.22);
+
+  --ds-color-surface: rgba(22, 72, 92, 0.38);
+  --ds-color-surface-raised: rgba(30, 90, 115, 0.34);
+  --ds-color-surface-sunken: rgba(10, 36, 50, 0.58);
+  --ds-color-surface-hover: rgba(32, 98, 122, 0.48);
+  --ds-color-surface-active: rgba(42, 128, 148, 0.42);
+
+  --ds-color-border: rgba(94, 186, 204, 0.2);
+  --ds-color-border-strong: rgba(110, 210, 228, 0.38);
+  --ds-color-border-dashed: rgba(110, 210, 228, 0.45);
+
+  --ds-color-text: #ecf8fa;
+  --ds-color-text-secondary: #9fd4e0;
+  --ds-color-text-muted: #5f93a3;
+  --ds-color-text-accent: var(--ds-accent-400);
+
+  --ds-color-accent: var(--ds-accent-500);
+  --ds-color-accent-bright: var(--ds-accent-400);
+  --ds-color-accent-deep: var(--ds-accent-600);
+  --ds-color-accent-muted: rgba(45, 188, 176, 0.16);
+
+  --ds-color-error: #f87171;
+  --ds-color-success: var(--ds-accent-400);
+
+  --ds-color-warning-bg: rgba(248, 113, 113, 0.12);
+  --ds-color-warning-border: rgba(248, 113, 113, 0.4);
+  --ds-color-warning-text: var(--ds-color-text-secondary);
+  --ds-color-warning-label: var(--ds-color-error);
+
+  --ds-wizard-step-active-bg: var(--ds-color-accent-muted);
+  --ds-wizard-step-active-border: rgba(94, 200, 220, 0.35);
+  --ds-wizard-step-active-color: var(--ds-color-accent-bright);
+
+  --ds-btn-primary-bg: linear-gradient(
+    135deg,
+    var(--ds-accent-400) 0%,
+    var(--ds-accent-500) 48%,
+    var(--ds-accent-600) 100%
+  );
+  --ds-btn-primary-text: #042a32;
+  --ds-btn-primary-shadow: 0 4px 14px -4px rgba(45, 188, 176, 0.38);
+  --ds-btn-primary-shadow-hover: 0 6px 18px -4px rgba(45, 188, 176, 0.48);
+
+  --ds-btn-secondary-bg: var(--ds-color-surface-hover);
+  --ds-btn-secondary-border: var(--ds-color-border);
+  --ds-btn-secondary-text: var(--ds-color-text);
+  --ds-btn-secondary-hover-bg: var(--ds-color-surface-active);
+  --ds-btn-secondary-hover-border: var(--ds-color-border-strong);
+
+  --ds-btn-ghost-bg: var(--ds-color-surface-hover);
+  --ds-btn-ghost-border: var(--ds-color-border-dashed);
+  --ds-btn-ghost-hover-bg: var(--ds-color-surface-active);
+
+  --ds-card-bg: linear-gradient(
+    155deg,
+    var(--ds-color-surface-raised),
+    var(--ds-color-surface-sunken)
+  );
+  --ds-card-border: var(--ds-color-border);
+  --ds-card-shadow: 0 24px 48px rgba(0, 18, 28, 0.45);
+  --ds-card-inset: inset 0 1px 0 rgba(110, 210, 228, 0.08);
+
+  --ds-app-gradient:
+    radial-gradient(
+      ellipse 100% 80% at 50% -18%,
+      var(--ds-color-bg-glow),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 70% 55% at 0% 100%,
+      rgba(26, 92, 122, 0.42),
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 100% 40%,
+      rgba(30, 77, 99, 0.32),
+      transparent 48%
+    ),
+    linear-gradient(180deg, #0f2a38 0%, var(--ds-color-bg) 38%, var(--ds-color-bg-deep) 100%);
+
+  --ds-panel-installed-bg: rgba(45, 188, 176, 0.1);
+  --ds-panel-installed-border: rgba(94, 200, 220, 0.28);
+  --ds-panel-action-bg: var(--ds-color-accent-muted);
+  --ds-panel-action-border: rgba(94, 200, 220, 0.22);
+
+  --ds-tooltip-bg: rgba(14, 32, 44, 0.96);
+  --ds-tooltip-border: rgba(110, 210, 228, 0.22);
+  --ds-tooltip-text: #d8eef4;
+  --ds-tooltip-shadow: 0 10px 28px rgba(0, 12, 22, 0.45);
+  --ds-tooltip-arrow: rgba(14, 32, 44, 0.96);
+
+  /* Legacy aliases */
+  --bg: var(--ds-color-bg);
+  --bg-deep: var(--ds-color-bg-deep);
+  --bg-glow-bright: var(--ds-color-bg-glow);
+  --surface: var(--ds-color-surface);
+  --surface-hover: var(--ds-color-surface-hover);
+  --surface-active: var(--ds-color-surface-active);
+  --border: var(--ds-color-border);
+  --border-hover: var(--ds-color-border-strong);
+  --text: var(--ds-color-text);
+  --text-secondary: var(--ds-color-text-secondary);
+  --text-muted: var(--ds-color-text-muted);
+  --accent: var(--ds-color-accent);
+  --accent-bright: var(--ds-color-accent-bright);
+  --accent-deep: var(--ds-color-accent-deep);
+  --accent-warm: var(--ds-color-accent-bright);
+  --accent-dim: var(--ds-color-accent-muted);
+  --cta-text: var(--ds-btn-primary-text);
+  --error: var(--ds-color-error);
+  --radius: var(--ds-radius-md);
+  --radius-sm: var(--ds-radius-sm);
+  --radius-full: var(--ds-radius-full);
+  --font: var(--ds-font-sans);
+}
+
+/* ── Light theme ── */
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --ds-color-bg: #e8f3f6;
+  --ds-color-bg-deep: #d4e8ee;
+  --ds-color-bg-glow: rgba(45, 188, 176, 0.18);
+
+  --ds-color-surface: rgba(255, 255, 255, 0.72);
+  --ds-color-surface-raised: rgba(255, 255, 255, 0.92);
+  --ds-color-surface-sunken: rgba(240, 250, 252, 0.95);
+  --ds-color-surface-hover: rgba(255, 255, 255, 0.95);
+  --ds-color-surface-active: rgba(224, 245, 248, 0.98);
+
+  --ds-color-border: rgba(26, 120, 140, 0.16);
+  --ds-color-border-strong: rgba(26, 120, 140, 0.28);
+  --ds-color-border-dashed: rgba(45, 160, 175, 0.4);
+
+  --ds-color-text: #0a2430;
+  --ds-color-text-secondary: #2d5f6f;
+  --ds-color-text-muted: #5a8494;
+  --ds-color-text-accent: var(--ds-accent-700);
+
+  --ds-color-accent: var(--ds-accent-600);
+  --ds-color-accent-bright: var(--ds-accent-700);
+  --ds-color-accent-deep: #0d5c63;
+  --ds-color-accent-muted: rgba(45, 188, 176, 0.14);
+
+  --ds-color-success: #0a6b72;
+
+  --ds-color-warning-bg: #ffeded;
+  --ds-color-warning-border: rgba(185, 45, 45, 0.38);
+  --ds-color-warning-text: #1a3d48;
+  --ds-color-warning-label: #b91c1c;
+
+  --ds-wizard-step-active-bg: rgba(45, 188, 176, 0.22);
+  --ds-wizard-step-active-border: rgba(26, 120, 140, 0.48);
+  --ds-wizard-step-active-color: var(--ds-color-accent-deep);
+
+  --ds-btn-primary-bg: linear-gradient(
+    135deg,
+    #3dd9c8 0%,
+    var(--ds-accent-500) 50%,
+    var(--ds-accent-600) 100%
+  );
+  --ds-btn-primary-text: #042a32;
+  --ds-btn-primary-shadow: 0 4px 14px -4px rgba(45, 188, 176, 0.32);
+  --ds-btn-primary-shadow-hover: 0 6px 18px -4px rgba(45, 188, 176, 0.4);
+
+  --ds-btn-secondary-bg: rgba(255, 255, 255, 0.85);
+  --ds-btn-secondary-border: var(--ds-color-border-strong);
+  --ds-btn-secondary-text: var(--ds-color-text);
+  --ds-btn-secondary-hover-bg: var(--ds-color-surface-active);
+  --ds-btn-secondary-hover-border: rgba(26, 120, 140, 0.38);
+
+  --ds-btn-ghost-bg: rgba(255, 255, 255, 0.6);
+  --ds-btn-ghost-border: var(--ds-color-border-dashed);
+  --ds-btn-ghost-hover-bg: rgba(255, 255, 255, 0.9);
+
+  --ds-card-bg: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(232, 246, 249, 0.98)
+  );
+  --ds-card-border: var(--ds-color-border);
+  --ds-card-shadow: 0 16px 40px rgba(10, 50, 65, 0.1);
+  --ds-card-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  --ds-app-gradient:
+    radial-gradient(
+      ellipse 100% 80% at 50% -18%,
+      var(--ds-color-bg-glow),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 70% 55% at 0% 100%,
+      rgba(160, 220, 230, 0.35),
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 100% 40%,
+      rgba(180, 230, 240, 0.25),
+      transparent 48%
+    ),
+    linear-gradient(180deg, #f5fbfc 0%, var(--ds-color-bg) 38%, var(--ds-color-bg-deep) 100%);
+
+  --ds-panel-installed-bg: rgba(45, 188, 176, 0.12);
+  --ds-panel-installed-border: rgba(45, 160, 175, 0.35);
+  --ds-panel-action-bg: var(--ds-color-accent-muted);
+  --ds-panel-action-border: rgba(45, 160, 175, 0.25);
+
+  --ds-tooltip-bg: rgba(255, 255, 255, 0.98);
+  --ds-tooltip-border: rgba(26, 120, 140, 0.18);
+  --ds-tooltip-text: #2d5f6f;
+  --ds-tooltip-shadow: 0 8px 24px rgba(10, 50, 65, 0.12);
+  --ds-tooltip-arrow: rgba(255, 255, 255, 0.98);
+}

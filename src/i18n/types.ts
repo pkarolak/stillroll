@@ -3,6 +3,7 @@ export type Language = 'pl' | 'en' | 'es'
 export type Translations = {
   tagline: string
   folderLabel: string
+  sourceLabel: string
   pickFolder: string
   changeFolder: string
   restoringFolder: string
@@ -26,4 +27,55 @@ export type Translations = {
   pause: string
   resume: string
   exit: string
+  showSourceFolder: string
+  showSourcePackage: string
+  showPackageHint: string
+  saveForLater: string
+  saveForLaterHint: string
+  wizardStep1Done: string
+  wizardStep2Title: string
+  wizardStep3Title: string
+  wizardStep4Title: string
+  wizardBack: string
+  wizardNext: string
+  wizardSkip: string
+  backToSetup: string
+  openPackage: string
+  exportPackage: string
+  exportingPackage: string
+  packageQualityEvent: string
+  packageQualityOriginal: string
+  offlineHint: string
+  installApp: string
+  installBannerText: string
+  installCardTitle: string
+  installCardIntro: string
+  installCardInstalled: string
+  installCardMobileHint: string
+  installGuideChrome1: string
+  installGuideChrome2: string
+  installGuideChrome3: string
+  installGuideEdge1: string
+  installGuideEdge2: string
+  installGuideEdge3: string
+  installGuideMenuAlt: string
+  installGuideEngagement: string
+  installGuideUnsupported: string
+  packageLoading: string
+  packageReady: string
+  packageStart: string
+  packageCancel: string
+  packageAutoStarting: string
+  useChromeEdge: string
+  exportProgress: string
+  exportComplete: string
+  prepareSuccessTitle: string
+  prepareSuccessStep1: string
+  prepareSuccessStep2: string
+  prepareSuccessWarningLabel: string
+  prepareSuccessWarning: string
+  prepareSuccessStep3: string
+  prepareAnother: string
+  prepareExportDesktopOnly: string
+  exportSizeWarning: string
 }

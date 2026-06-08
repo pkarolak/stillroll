@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { SetupPanel } from './components/SetupPanel'
+import { AppTopBar } from './components/AppTopBar'
+import { SetupFlow } from './components/SetupFlow'
 import { Slideshow } from './components/Slideshow'
 import type { Slide, SlideshowConfig } from './types'
 
@@ -9,6 +10,7 @@ function App() {
   const [view, setView] = useState<AppView>('setup')
   const [slides, setSlides] = useState<Slide[]>([])
   const [sessionKey, setSessionKey] = useState(0)
+  const [setupKey, setSetupKey] = useState(0)
   const [config, setConfig] = useState<SlideshowConfig>({
     duration: 6,
     order: 'folder',
@@ -25,6 +27,7 @@ function App() {
   const handleExit = () => {
     setView('setup')
     setSlides([])
+    setSetupKey((k) => k + 1)
   }
 
   if (view === 'slideshow' && slides.length > 0) {
@@ -40,7 +43,10 @@ function App() {
 
   return (
     <main className="app">
-      <SetupPanel onStart={handleStart} />
+      <AppTopBar />
+      <div className="app__body">
+        <SetupFlow key={setupKey} onStart={handleStart} />
+      </div>
     </main>
   )
 }
