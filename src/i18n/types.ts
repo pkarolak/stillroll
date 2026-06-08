@@ -6,6 +6,7 @@ export type Translations = {
   sourceLabel: string
   pickFolder: string
   changeFolder: string
+  unlinkFolder: string
   restoringFolder: string
   scanning: string
   slideDuration: string

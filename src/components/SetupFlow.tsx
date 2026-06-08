@@ -8,6 +8,7 @@ import type { ImageEntry, Slide, SlideOrder, SlideshowConfig } from '../types'
 import { onLaunchFile } from '../boot/fileLaunch'
 import { useLanguage } from '../i18n/useLanguage'
 import { loadSavedFolder, pickFolder } from '../utils/collectImages'
+import { clearFolderHandle } from '../utils/folderStorage'
 import { naturalCompare } from '../utils/naturalSort'
 import { resolveSlideFile } from '../utils/slideSource'
 import { shuffle } from '../utils/shuffle'
@@ -142,6 +143,13 @@ export function SetupFlow({ onStart }: SetupFlowProps) {
     }
   }
 
+  const handleClearFolder = () => {
+    setEntries([])
+    setFolderName(null)
+    setError(null)
+    void clearFolderHandle().catch(() => {})
+  }
+
   const handlePickFolder = async () => {
     setError(null)
     setLoading(true)
@@ -229,8 +237,7 @@ export function SetupFlow({ onStart }: SetupFlowProps) {
   }
 
   const handlePrepareAnother = () => {
-    setEntries([])
-    setFolderName(null)
+    handleClearFolder()
     setDuration(6)
     setOrder('folder')
     setCorrectOrientation(true)
@@ -270,6 +277,7 @@ export function SetupFlow({ onStart }: SetupFlowProps) {
             error={error}
             onSourceChange={handleSourceChange}
             onPickFolder={() => void handlePickFolder()}
+            onClearFolder={handleClearFolder}
             onDurationChange={setDuration}
             onOrderChange={setOrder}
             onCorrectOrientationChange={setCorrectOrientation}

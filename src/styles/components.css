@@ -308,32 +308,21 @@
 
 .folder-picker {
   display: flex;
-  align-items: center;
-  gap: var(--ds-space-3);
+  align-items: stretch;
   width: 100%;
   min-height: 2.75rem;
-  padding: 0.55rem 0.85rem;
   border-radius: var(--ds-radius-md);
   border: var(--ds-border-width) dashed var(--ds-color-border-dashed);
   overflow: hidden;
   background: var(--ds-color-surface-sunken);
-  color: var(--ds-color-text);
-  font-family: var(--ds-font-sans);
-  text-align: left;
-  cursor: pointer;
   transition:
     background var(--ds-transition-fast),
     border-color var(--ds-transition-fast);
 }
 
-.folder-picker:hover:not(:disabled) {
+.folder-picker:hover {
   background: var(--ds-color-surface-hover);
   border-color: var(--ds-color-border-strong);
-}
-
-.folder-picker:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
 }
 
 .folder-picker--selected {
@@ -341,9 +330,50 @@
   border-color: var(--ds-color-border);
 }
 
-.folder-picker--selected:hover:not(:disabled) {
-  border-color: var(--ds-color-border-strong);
-  background: var(--ds-color-surface-hover);
+.folder-picker__select {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  min-width: 0;
+  padding: 0.55rem 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--ds-color-text);
+  font-family: var(--ds-font-sans);
+  text-align: left;
+  cursor: pointer;
+}
+
+.folder-picker__select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.folder-picker--with-action .folder-picker__select {
+  padding-right: 0.5rem;
+}
+
+.folder-picker__unlink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  padding: 0;
+  border: none;
+  border-left: var(--ds-border-width) solid var(--ds-color-border);
+  background: transparent;
+  color: var(--ds-color-text-muted);
+  cursor: pointer;
+  transition:
+    color var(--ds-transition-fast),
+    background var(--ds-transition-fast);
+}
+
+.folder-picker__unlink:hover {
+  color: var(--ds-color-error);
+  background: var(--ds-color-surface-active);
 }
 
 .folder-picker__icon {

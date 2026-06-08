@@ -24,6 +24,7 @@ type MainSetupScreenProps = {
   error: string | null
   onSourceChange: (source: SetupSource) => void
   onPickFolder: () => void
+  onClearFolder: () => void
   onDurationChange: (value: number) => void
   onOrderChange: (value: SlideOrder) => void
   onCorrectOrientationChange: (value: boolean) => void
@@ -50,6 +51,7 @@ export function MainSetupScreen({
   error,
   onSourceChange,
   onPickFolder,
+  onClearFolder,
   onDurationChange,
   onOrderChange,
   onCorrectOrientationChange,
@@ -77,6 +79,7 @@ export function MainSetupScreen({
               loading={loading}
               restoring={restoring}
               onPickFolder={onPickFolder}
+              onClearFolder={onClearFolder}
             />
 
             <SlideshowSettings

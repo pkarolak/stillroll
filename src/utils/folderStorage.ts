@@ -52,6 +52,16 @@ async function ensureReadPermission(
   return requested === 'granted'
 }
 
+export async function clearFolderHandle(): Promise<void> {
+  const db = await openDb()
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite')
+    tx.objectStore(STORE_NAME).delete(HANDLE_KEY)
+    tx.oncomplete = () => resolve()
+    tx.onerror = () => reject(tx.error)
+  })
+}
+
 export async function loadSavedFolderHandle(): Promise<FileSystemDirectoryHandle | null> {
   try {
     const handle = await loadFolderHandle()
