@@ -78,27 +78,29 @@ export function PackageSection({
         </div>
       ) : (
         <>
-          <button
-            type="button"
-            className="folder-picker"
-            disabled={busy}
-            onClick={() => document.getElementById('package-file-input')?.click()}
-          >
-            {busy ? (
-              <Loader2 size={20} className="folder-picker__icon spin" />
-            ) : (
-              <PackageOpen size={20} className="folder-picker__icon" />
-            )}
-            <span className="folder-picker__content">
-              <span className="folder-picker__label">
-                {autoStarting
-                  ? t.packageAutoStarting
-                  : importing
-                    ? t.packageLoading
-                    : t.openPackage}
+          <div className="folder-picker">
+            <button
+              type="button"
+              className="folder-picker__select"
+              disabled={busy}
+              onClick={() => document.getElementById('package-file-input')?.click()}
+            >
+              {busy ? (
+                <Loader2 size={20} className="folder-picker__icon spin" />
+              ) : (
+                <PackageOpen size={20} className="folder-picker__icon" />
+              )}
+              <span className="folder-picker__content">
+                <span className="folder-picker__label">
+                  {autoStarting
+                    ? t.packageAutoStarting
+                    : importing
+                      ? t.packageLoading
+                      : t.openPackage}
+                </span>
               </span>
-            </span>
-          </button>
+            </button>
+          </div>
           <p className="hint">{t.showPackageHint}</p>
           <p className="hint">{t.offlineHint}</p>
         </>
