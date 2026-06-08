@@ -21,8 +21,8 @@ export default defineConfig({
         short_name: 'StillRoll',
         description:
           'Local infinite photo slideshow — works offline with .stillroll packages.',
-        theme_color: '#0f2a38',
-        background_color: '#0a1c26',
+        theme_color: '#0a1a24',
+        background_color: '#060f15',
         display: 'standalone',
         start_url: '/',
         icons: [

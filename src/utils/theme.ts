@@ -22,7 +22,11 @@ export function applyTheme(theme: Theme): void {
   document.documentElement.dataset.theme = theme
   const meta = document.querySelector('meta[name="theme-color"]')
   if (meta) {
-    meta.setAttribute('content', theme === 'dark' ? '#0f2a38' : '#e8f3f6')
+    const token = theme === 'dark' ? '--ds-color-bg-top' : '--ds-color-bg'
+    const color = getComputedStyle(document.documentElement)
+      .getPropertyValue(token)
+      .trim()
+    if (color) meta.setAttribute('content', color)
   }
 }
 

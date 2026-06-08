@@ -546,7 +546,8 @@
 /* ── Chip group (language / theme) ── */
 
 .chip-group {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
   gap: 0.125rem;
   padding: 0.2rem;
   background: var(--ds-color-surface-hover);
@@ -557,8 +558,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 1.75rem;
-  padding: 0.3rem 0.55rem;
+  box-sizing: border-box;
+  height: 1.625rem;
+  min-width: 1.625rem;
+  padding: 0 0.5rem;
   background: transparent;
   border: none;
   border-radius: var(--ds-radius-full);
@@ -572,6 +575,11 @@
   transition:
     background var(--ds-transition-fast),
     color var(--ds-transition-fast);
+}
+
+.chip svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 .chip:hover:not(.chip--active) {
