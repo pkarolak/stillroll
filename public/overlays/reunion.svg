@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 520" fill="none">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <!-- Polaroid sticker left -->
+  <rect x="60" y="40" width="140" height="170" rx="4" fill="#FFFEF5" stroke="#8D6E63" stroke-width="3" transform="rotate(-8 130 125)" filter="url(#shadow)"/>
+  <rect x="75" y="55" width="110" height="100" fill="#D7CCC8" transform="rotate(-8 130 105)"/>
+  <rect x="85" y="165" width="90" height="8" rx="2" fill="#BCAAA4" transform="rotate(-8 130 169)"/>
+  <!-- Vintage badge right -->
+  <circle cx="1780" cy="120" r="70" fill="#FFF8E1" stroke="#FF8F00" stroke-width="4" filter="url(#shadow)"/>
+  <circle cx="1780" cy="120" r="55" fill="none" stroke="#FFB74D" stroke-width="2" stroke-dasharray="6 4"/>
+  <path d="M1745 120 Q1780 90 1815 120 Q1780 150 1745 120" fill="#FF8F00" opacity="0.3"/>
+  <!-- Stars falling edges -->
+  <path d="M40 220 L44 232 L56 232 L46 240 L50 252 L40 244 L30 252 L34 240 L24 232 L36 232 Z" fill="#FFD54F"/>
+  <path d="M55 290 L58 299 L67 299 L60 305 L63 314 L55 308 L47 314 L50 305 L43 299 L52 299 Z" fill="#FF8F00"/>
+  <path d="M1870 210 L1873 220 L1883 220 L1875 226 L1878 236 L1870 230 L1862 236 L1865 226 L1857 220 L1867 220 Z" fill="#FFD54F"/>
+  <path d="M1855 280 L1858 288 L1867 288 L1860 294 L1863 303 L1855 297 L1847 303 L1850 294 L1843 288 L1852 288 Z" fill="#FF8F00"/>
+  <!-- Center label -->
+  <path d="M620 60 Q960 20 1300 60 Q1380 65 1390 110 Q1400 160 1350 175 Q1380 210 1340 240 Q960 270 580 240 Q540 210 570 175 Q520 160 530 110 Q540 65 620 60 Z" fill="#FFFDE7" stroke="#8D6E63" stroke-width="3" filter="url(#shadow)"/>
+  <!-- Washi tape -->
+  <rect x="580" y="45" width="80" height="22" rx="2" fill="#FFAB91" opacity="0.7" transform="rotate(-5 620 56)"/>
+  <rect x="1260" y="48" width="75" height="20" rx="2" fill="#90CAF9" opacity="0.7" transform="rotate(4 1297 58)"/>
+</svg>

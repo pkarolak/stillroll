@@ -7,12 +7,14 @@ export type ImportedPackage = {
   manifest: StillrollManifest
   slides: Slide[]
   archiveSize: number
+  customOverlayBuffer?: ArrayBuffer
 }
 
 export async function importStillrollPackage(file: File): Promise<ImportedPackage> {
   validateArchiveFileSize(file.size)
 
-  const { manifest, slides: rawSlides } = await runImportInWorker(file)
+  const { manifest, slides: rawSlides, overlayBuffer } =
+    await runImportInWorker(file)
 
   const byFilename = new Map(rawSlides.map((s) => [s.filename, s]))
 
@@ -25,6 +27,7 @@ export async function importStillrollPackage(file: File): Promise<ImportedPackag
       path: manifestSlide.filename,
       url: '',
       file: fileObj,
+      ...(manifestSlide.caption ? { caption: manifestSlide.caption } : {}),
     }
   })
 
@@ -32,6 +35,7 @@ export async function importStillrollPackage(file: File): Promise<ImportedPackag
     manifest,
     slides,
     archiveSize: file.size,
+    ...(overlayBuffer ? { customOverlayBuffer: overlayBuffer } : {}),
   }
 }
 

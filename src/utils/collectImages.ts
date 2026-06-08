@@ -115,6 +115,8 @@ export async function pickFolder(): Promise<{
       if (err instanceof DOMException && err.name === 'AbortError') {
         throw err
       }
+      console.error('showDirectoryPicker failed', err)
+      throw err
     }
   }
   return pickFolderWithInput()

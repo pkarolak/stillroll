@@ -79,4 +79,42 @@ export type Translations = {
   prepareAnother: string
   prepareExportDesktopOnly: string
   exportSizeWarning: string
+  advancedSettings: string
+  captionsLabel: string
+  captionsEdit: string
+  captionsShowInSlideshow: string
+  captionsShowHint: string
+  captionsNoPhotos: string
+  captionsEditorHint: string
+  captionsAutoSave: string
+  captionsOpenPreview: string
+  captionsClose: string
+  captionsEditorTitle: string
+  captionsBack: string
+  captionsDone: string
+  captionDate: string
+  captionPlace: string
+  captionText: string
+  captionDatePlaceholder: string
+  captionPlacePlaceholder: string
+  captionTextPlaceholder: string
+  captionsTooManyPhotos: string
+  captionsExifLoading: string
+  eventOverlayLabel: string
+  eventOverlayEdit: string
+  eventOverlayShowHint: string
+  eventOverlayEditorTitle: string
+  eventOverlayDone: string
+  eventOverlayBirthday: string
+  eventOverlayWedding: string
+  eventOverlayReunion: string
+  eventOverlayAnniversary: string
+  eventOverlayGraduation: string
+  eventOverlayCustom: string
+  eventOverlayText: string
+  eventOverlayTextPlaceholder: string
+  eventOverlayUploadHint: string
+  eventOverlayUploadNotPng: string
+  eventOverlayUploadTooLarge: string
+  eventOverlayPreviewLabel: string
 }

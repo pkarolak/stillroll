@@ -102,6 +102,49 @@ export const translations: Record<Language, Translations> = {
       'Pobieranie pliku wymaga Chrome lub Edge na komputerze.',
     exportSizeWarning:
       'Szacowany rozmiar przekracza limit pliku (2 GB). Wybierz opcję zoptymalizowaną lub usuń część zdjęć.',
+    advancedSettings: 'Ustawienia zaawansowane',
+    captionsLabel: 'Podpisy do zdjęć',
+    captionsEdit: 'Edytuj podpisy',
+    captionsShowInSlideshow: 'Pokazuj podpisy w pokazie',
+    captionsShowHint:
+      'Wyświetlaj datę, miejsce i tekst pod zdjęciami podczas pokazu.',
+    captionsNoPhotos: 'Wybierz folder ze zdjęciami, aby dodać podpisy.',
+    captionsEditorHint:
+      'Data i miejsce uzupełniamy automatycznie z metadanych zdjęć, jeśli są dostępne.',
+    captionsAutoSave: 'Zmiany zapisują się automatycznie.',
+    captionsOpenPreview: 'Podgląd zdjęcia',
+    captionsClose: 'Zamknij podgląd',
+    captionsEditorTitle: 'Podpisy zdjęć',
+    captionsBack: 'Wstecz',
+    captionsDone: 'Gotowe',
+    captionDate: 'Data',
+    captionPlace: 'Miejsce',
+    captionText: 'Podpis',
+    captionDatePlaceholder: 'np. Marzec 2025',
+    captionPlacePlaceholder: 'np. Fuerteventura',
+    captionTextPlaceholder: 'np. Szalone wakacje z teściami',
+    captionsTooManyPhotos:
+      'Podpisy są dostępne dla pokazów do 500 zdjęć.',
+    captionsExifLoading: 'Uzupełnianie z metadanych…',
+    eventOverlayLabel: 'Nakładka eventowa',
+    eventOverlayEdit: 'Edytuj',
+    eventOverlayShowHint:
+      'Kolorowa ilustracja u góry ekranu z Twoim tekstem okolicznościowym.',
+    eventOverlayEditorTitle: 'Nakładka eventowa',
+    eventOverlayDone: 'Gotowe',
+    eventOverlayBirthday: 'Urodziny',
+    eventOverlayWedding: 'Wesele',
+    eventOverlayReunion: 'Spotkanie po latach',
+    eventOverlayAnniversary: 'Rocznica',
+    eventOverlayGraduation: 'Matura / ukończenie',
+    eventOverlayCustom: 'Własna nakładka',
+    eventOverlayText: 'Tekst okolicznościowy',
+    eventOverlayTextPlaceholder: 'np. Wesele Asi i Piotra',
+    eventOverlayUploadHint:
+      'Wgraj prawdziwy PNG z kanałem alfa (nie JPEG z czarnym tłem) — pełna szerokość, ilustracja u góry z lekkim nachodzeniem na zdjęcie.',
+    eventOverlayUploadNotPng: 'Dozwolone są tylko pliki PNG.',
+    eventOverlayUploadTooLarge: 'Plik jest za duży (maks. 2 MB).',
+    eventOverlayPreviewLabel: 'Podgląd na żywo',
   },
   en: {
     tagline:
@@ -200,6 +243,48 @@ export const translations: Record<Language, Translations> = {
       'Downloading the file requires Chrome or Edge on a computer.',
     exportSizeWarning:
       'Estimated size exceeds the file limit (2 GB). Choose the optimized option or remove some photos.',
+    advancedSettings: 'Advanced settings',
+    captionsLabel: 'Photo captions',
+    captionsEdit: 'Edit captions',
+    captionsShowInSlideshow: 'Show captions in slideshow',
+    captionsShowHint:
+      'Display date, place, and text below photos during the slideshow.',
+    captionsNoPhotos: 'Choose a photo folder to add captions.',
+    captionsEditorHint:
+      'Date and place are filled automatically from photo metadata when available.',
+    captionsAutoSave: 'Changes are saved automatically.',
+    captionsOpenPreview: 'Preview photo',
+    captionsClose: 'Close preview',
+    captionsEditorTitle: 'Photo captions',
+    captionsBack: 'Back',
+    captionsDone: 'Done',
+    captionDate: 'Date',
+    captionPlace: 'Place',
+    captionText: 'Caption',
+    captionDatePlaceholder: 'e.g. March 2025',
+    captionPlacePlaceholder: 'e.g. Fuerteventura',
+    captionTextPlaceholder: 'e.g. Crazy vacation with the in-laws',
+    captionsTooManyPhotos: 'Captions are available for shows with up to 500 photos.',
+    captionsExifLoading: 'Filling from metadata…',
+    eventOverlayLabel: 'Event overlay',
+    eventOverlayEdit: 'Edit',
+    eventOverlayShowHint:
+      'Colorful illustration at the top of the screen with your celebration text.',
+    eventOverlayEditorTitle: 'Event overlay',
+    eventOverlayDone: 'Done',
+    eventOverlayBirthday: 'Birthday',
+    eventOverlayWedding: 'Wedding',
+    eventOverlayReunion: 'Reunion',
+    eventOverlayAnniversary: 'Anniversary',
+    eventOverlayGraduation: 'Graduation',
+    eventOverlayCustom: 'Custom overlay',
+    eventOverlayText: 'Celebration text',
+    eventOverlayTextPlaceholder: 'e.g. Asia and Piotr’s wedding',
+    eventOverlayUploadHint:
+      'Upload a colorful PNG with transparency — full width, illustration at the top with light overlap on the photo.',
+    eventOverlayUploadNotPng: 'Only PNG files are allowed.',
+    eventOverlayUploadTooLarge: 'File is too large (max 2 MB).',
+    eventOverlayPreviewLabel: 'Live preview',
   },
   es: {
     tagline:
@@ -301,6 +386,49 @@ export const translations: Record<Language, Translations> = {
       'Descargar el archivo requiere Chrome o Edge en un ordenador.',
     exportSizeWarning:
       'El tamaño estimado supera el límite del archivo (2 GB). Elige la opción optimizada o elimina algunas fotos.',
+    advancedSettings: 'Ajustes avanzados',
+    captionsLabel: 'Pies de foto',
+    captionsEdit: 'Editar pies',
+    captionsShowInSlideshow: 'Mostrar pies en la presentación',
+    captionsShowHint:
+      'Muestra fecha, lugar y texto bajo las fotos durante la presentación.',
+    captionsNoPhotos: 'Elige una carpeta de fotos para añadir pies.',
+    captionsEditorHint:
+      'La fecha y el lugar se completan automáticamente desde los metadatos de la foto, si están disponibles.',
+    captionsAutoSave: 'Los cambios se guardan automáticamente.',
+    captionsOpenPreview: 'Vista previa de la foto',
+    captionsClose: 'Cerrar vista previa',
+    captionsEditorTitle: 'Pies de foto',
+    captionsBack: 'Atrás',
+    captionsDone: 'Listo',
+    captionDate: 'Fecha',
+    captionPlace: 'Lugar',
+    captionText: 'Pie de foto',
+    captionDatePlaceholder: 'p. ej. marzo de 2025',
+    captionPlacePlaceholder: 'p. ej. Fuerteventura',
+    captionTextPlaceholder: 'p. ej. Vacaciones locas con los suegros',
+    captionsTooManyPhotos:
+      'Los pies están disponibles para pases de hasta 500 fotos.',
+    captionsExifLoading: 'Completando desde metadatos…',
+    eventOverlayLabel: 'Superposición de evento',
+    eventOverlayEdit: 'Editar',
+    eventOverlayShowHint:
+      'Ilustración colorida en la parte superior con tu texto de celebración.',
+    eventOverlayEditorTitle: 'Superposición de evento',
+    eventOverlayDone: 'Listo',
+    eventOverlayBirthday: 'Cumpleaños',
+    eventOverlayWedding: 'Boda',
+    eventOverlayReunion: 'Reencuentro',
+    eventOverlayAnniversary: 'Aniversario',
+    eventOverlayGraduation: 'Graduación',
+    eventOverlayCustom: 'Superposición propia',
+    eventOverlayText: 'Texto de celebración',
+    eventOverlayTextPlaceholder: 'p. ej. Boda de Asia y Piotr',
+    eventOverlayUploadHint:
+      'Sube un PNG colorido con transparencia — ancho completo, ilustración arriba con ligera superposición sobre la foto.',
+    eventOverlayUploadNotPng: 'Solo se permiten archivos PNG.',
+    eventOverlayUploadTooLarge: 'El archivo es demasiado grande (máx. 2 MB).',
+    eventOverlayPreviewLabel: 'Vista previa en vivo',
   },
 }
 
@@ -315,6 +443,27 @@ export function detectLanguage(): Language {
   if (lang.startsWith('pl')) return 'pl'
   if (lang.startsWith('es')) return 'es'
   return 'en'
+}
+
+export function captionsProgress(
+  filled: number,
+  total: number,
+  lang: Language,
+): string {
+  switch (lang) {
+    case 'pl': {
+      const ending = filled === 1 ? 'podpisem' : 'podpisami'
+      return `${filled} z ${total} z ${ending}`
+    }
+    case 'es':
+      return filled === 1
+        ? `1 de ${total} con pie`
+        : `${filled} de ${total} con pie`
+    default:
+      return filled === 1
+        ? `1 of ${total} with a caption`
+        : `${filled} of ${total} with captions`
+  }
 }
 
 export function photoCount(count: number, lang: Language): string {

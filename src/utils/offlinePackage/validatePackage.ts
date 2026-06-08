@@ -3,6 +3,7 @@ import {
   AUTO_START_MAX_BYTES,
   AUTO_START_MAX_SLIDES,
   MANIFEST_FILENAME,
+  OVERLAY_FILENAME,
   MAX_ARCHIVE_BYTES,
   MAX_FILES_IN_ARCHIVE,
   MAX_SINGLE_FILE_BYTES,
@@ -51,7 +52,7 @@ export function validateUnzipBudget(
 export function validateExtractedEntry(path: string, size: number): void {
   validateZipEntryPath(path)
 
-  if (path === MANIFEST_FILENAME) {
+  if (path === MANIFEST_FILENAME || path === OVERLAY_FILENAME) {
     return
   }
 

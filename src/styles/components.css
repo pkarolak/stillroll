@@ -410,6 +410,23 @@
   color: var(--ds-color-text-muted);
 }
 
+.folder-picker__chevron {
+  flex-shrink: 0;
+  color: var(--ds-color-text-muted);
+}
+
+/* ── Optical icon alignment ── */
+
+.optical-chevron-prev svg,
+.caption-modal__nav--prev svg {
+  transform: translateX(-2px);
+}
+
+.optical-chevron-next svg,
+.caption-modal__nav--next svg {
+  transform: translateX(2px);
+}
+
 /* ── Badge ── */
 
 .badge {

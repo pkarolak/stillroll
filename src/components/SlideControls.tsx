@@ -38,7 +38,12 @@ export function SlideControls({
       className={`slide-controls ${visible ? 'slide-controls--visible' : ''}`}
     >
       <div className="slide-controls__bar">
-        <button type="button" onClick={onPrev} aria-label={t.prevSlide}>
+        <button
+          type="button"
+          className="optical-chevron-prev"
+          onClick={onPrev}
+          aria-label={t.prevSlide}
+        >
           <ChevronLeft size={20} strokeWidth={1.5} />
         </button>
 
@@ -55,7 +60,12 @@ export function SlideControls({
           )}
         </button>
 
-        <button type="button" onClick={onNext} aria-label={t.nextSlide}>
+        <button
+          type="button"
+          className="optical-chevron-next"
+          onClick={onNext}
+          aria-label={t.nextSlide}
+        >
           <ChevronRight size={20} strokeWidth={1.5} />
         </button>
 

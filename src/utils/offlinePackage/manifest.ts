@@ -1,4 +1,11 @@
-import type { SlideshowConfig } from '../../types'
+import type {
+  EventOverlaySettings,
+  EventOverlayTemplateId,
+  SlideCaption,
+  SlideshowConfig,
+} from '../../types'
+import { MAX_CAPTION_FIELD_LENGTH } from '../captionUtils'
+import { trimEventOverlayText } from '../eventOverlayUtils'
 import { MAX_MANIFEST_BYTES, MAX_SLIDES } from './limits'
 
 export const STILLROLL_PACKAGE_VERSION = 1 as const
@@ -6,6 +13,7 @@ export const STILLROLL_PACKAGE_VERSION = 1 as const
 export type PackageSlideEntry = {
   id: string
   filename: string
+  caption?: SlideCaption
 }
 
 export type StillrollManifest = {
@@ -14,6 +22,52 @@ export type StillrollManifest = {
   createdAt: string
   config: SlideshowConfig
   slides: PackageSlideEntry[]
+}
+
+function parseCaptionField(value: unknown): string | undefined {
+  if (typeof value !== 'string') return undefined
+  const trimmed = value.trim().slice(0, MAX_CAPTION_FIELD_LENGTH)
+  return trimmed || undefined
+}
+
+const EVENT_OVERLAY_TEMPLATE_IDS = new Set<EventOverlayTemplateId>([
+  'birthday',
+  'wedding',
+  'reunion',
+  'anniversary',
+  'graduation',
+  'custom',
+])
+
+function parseEventOverlay(raw: unknown): EventOverlaySettings | undefined {
+  if (!raw || typeof raw !== 'object') return undefined
+  const o = raw as Record<string, unknown>
+  if (
+    typeof o.templateId !== 'string' ||
+    !EVENT_OVERLAY_TEMPLATE_IDS.has(o.templateId as EventOverlayTemplateId)
+  ) {
+    return undefined
+  }
+  const text =
+    typeof o.text === 'string' ? trimEventOverlayText(o.text) : ''
+  return {
+    templateId: o.templateId as EventOverlayTemplateId,
+    text,
+  }
+}
+
+function parseSlideCaption(raw: unknown): SlideCaption | undefined {
+  if (!raw || typeof raw !== 'object') return undefined
+  const c = raw as Record<string, unknown>
+  const date = parseCaptionField(c.date)
+  const place = parseCaptionField(c.place)
+  const text = parseCaptionField(c.text)
+  if (!date && !place && !text) return undefined
+  return {
+    ...(date ? { date } : {}),
+    ...(place ? { place } : {}),
+    ...(text ? { text } : {}),
+  }
 }
 
 export function buildManifest(
@@ -74,6 +128,16 @@ export function parseManifestJson(text: string): StillrollManifest {
     throw new Error('MANIFEST_INVALID')
   }
 
+  const captionsEnabled =
+    typeof config.captionsEnabled === 'boolean' ? config.captionsEnabled : false
+
+  const eventOverlayEnabled =
+    typeof config.eventOverlayEnabled === 'boolean'
+      ? config.eventOverlayEnabled
+      : false
+
+  const eventOverlay = parseEventOverlay(config.eventOverlay)
+
   if (!Array.isArray(m.slides) || m.slides.length === 0) {
     throw new Error('MANIFEST_NO_SLIDES')
   }
@@ -90,7 +154,12 @@ export function parseManifestJson(text: string): StillrollManifest {
     if (typeof s.id !== 'string' || typeof s.filename !== 'string') {
       throw new Error('MANIFEST_INVALID')
     }
-    slides.push({ id: s.id, filename: s.filename })
+    const caption = parseSlideCaption(s.caption)
+    slides.push({
+      id: s.id,
+      filename: s.filename,
+      ...(caption ? { caption } : {}),
+    })
   }
 
   return {
@@ -101,6 +170,9 @@ export function parseManifestJson(text: string): StillrollManifest {
       duration: config.duration,
       order: config.order,
       correctOrientation: config.correctOrientation,
+      captionsEnabled,
+      eventOverlayEnabled,
+      ...(eventOverlay ? { eventOverlay } : {}),
     },
     slides,
   }

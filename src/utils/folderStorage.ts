@@ -1,35 +1,24 @@
-const DB_NAME = 'slideshow'
-const STORE_NAME = 'settings'
-const HANDLE_KEY = 'lastFolderHandle'
+import { openSlideshowDb, SETTINGS_STORE } from './slideshowDb'
 
-function openDb(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1)
-    request.onupgradeneeded = () => {
-      request.result.createObjectStore(STORE_NAME)
-    }
-    request.onerror = () => reject(request.error)
-    request.onsuccess = () => resolve(request.result)
-  })
-}
+const HANDLE_KEY = 'lastFolderHandle'
 
 export async function saveFolderHandle(
   handle: FileSystemDirectoryHandle,
 ): Promise<void> {
-  const db = await openDb()
+  const db = await openSlideshowDb()
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readwrite')
-    tx.objectStore(STORE_NAME).put(handle, HANDLE_KEY)
+    const tx = db.transaction(SETTINGS_STORE, 'readwrite')
+    tx.objectStore(SETTINGS_STORE).put(handle, HANDLE_KEY)
     tx.oncomplete = () => resolve()
     tx.onerror = () => reject(tx.error)
   })
 }
 
 export async function loadFolderHandle(): Promise<FileSystemDirectoryHandle | null> {
-  const db = await openDb()
+  const db = await openSlideshowDb()
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readonly')
-    const request = tx.objectStore(STORE_NAME).get(HANDLE_KEY)
+    const tx = db.transaction(SETTINGS_STORE, 'readonly')
+    const request = tx.objectStore(SETTINGS_STORE).get(HANDLE_KEY)
     request.onsuccess = () => {
       const handle = request.result
       if (handle?.kind === 'directory') {
@@ -53,10 +42,10 @@ async function ensureReadPermission(
 }
 
 export async function clearFolderHandle(): Promise<void> {
-  const db = await openDb()
+  const db = await openSlideshowDb()
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readwrite')
-    tx.objectStore(STORE_NAME).delete(HANDLE_KEY)
+    const tx = db.transaction(SETTINGS_STORE, 'readwrite')
+    tx.objectStore(SETTINGS_STORE).delete(HANDLE_KEY)
     tx.oncomplete = () => resolve()
     tx.onerror = () => reject(tx.error)
   })

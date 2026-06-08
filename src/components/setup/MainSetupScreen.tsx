@@ -6,17 +6,21 @@ import { useLanguage } from '../../i18n/useLanguage'
 import { FolderSection } from './FolderSection'
 import { PackageSection } from './PackageSection'
 import { SlideshowSettings } from './SlideshowSettings'
+import { AdvancedSettings } from './AdvancedSettings'
 import { SourcePicker, type SetupSource } from './SourcePicker'
 
 type MainSetupScreenProps = {
   source: SetupSource
   folderName: string | null
   entries: ImageEntry[]
+  captionEntries: ImageEntry[]
   loading: boolean
   restoring: boolean
   duration: number
   order: SlideOrder
   correctOrientation: boolean
+  captionsEnabled: boolean
+  eventOverlayEnabled: boolean
   starting: boolean
   importing: boolean
   imported: ImportedPackage | null
@@ -28,6 +32,10 @@ type MainSetupScreenProps = {
   onDurationChange: (value: number) => void
   onOrderChange: (value: SlideOrder) => void
   onCorrectOrientationChange: (value: boolean) => void
+  onCaptionsEnabledChange: (value: boolean) => void
+  onOpenCaptions: () => void
+  onEventOverlayEnabledChange: (value: boolean) => void
+  onOpenEventOverlay: () => void
   onStart: () => void
   onSaveForLater: () => void
   onOpenPackage: (file: File) => void
@@ -39,11 +47,14 @@ export function MainSetupScreen({
   source,
   folderName,
   entries,
+  captionEntries,
   loading,
   restoring,
   duration,
   order,
   correctOrientation,
+  captionsEnabled,
+  eventOverlayEnabled,
   starting,
   importing,
   imported,
@@ -55,6 +66,10 @@ export function MainSetupScreen({
   onDurationChange,
   onOrderChange,
   onCorrectOrientationChange,
+  onCaptionsEnabledChange,
+  onOpenCaptions,
+  onEventOverlayEnabledChange,
+  onOpenEventOverlay,
   onStart,
   onSaveForLater,
   onOpenPackage,
@@ -65,6 +80,8 @@ export function MainSetupScreen({
 
   const canStartFolder = entries.length > 0 && !starting
   const canSaveForLater = entries.length > 0
+  const showPackageAdvanced =
+    Boolean(imported) && !autoStarting && captionEntries.length > 0
 
   return (
     <div className="setup-flow main-setup">
@@ -89,6 +106,16 @@ export function MainSetupScreen({
               onDurationChange={onDurationChange}
               onOrderChange={onOrderChange}
               onCorrectOrientationChange={onCorrectOrientationChange}
+            />
+
+            <AdvancedSettings
+              photoCount={entries.length}
+              captionsEnabled={captionsEnabled}
+              onCaptionsEnabledChange={onCaptionsEnabledChange}
+              onOpenCaptions={onOpenCaptions}
+              eventOverlayEnabled={eventOverlayEnabled}
+              onEventOverlayEnabledChange={onEventOverlayEnabledChange}
+              onOpenEventOverlay={onOpenEventOverlay}
             />
           </div>
 
@@ -130,6 +157,19 @@ export function MainSetupScreen({
             onOpenPackage={onOpenPackage}
             onStart={onPackageStart}
             onCancel={onPackageCancel}
+            advancedSettings={
+              showPackageAdvanced ? (
+                <AdvancedSettings
+                  photoCount={captionEntries.length}
+                  captionsEnabled={captionsEnabled}
+                  onCaptionsEnabledChange={onCaptionsEnabledChange}
+                  onOpenCaptions={onOpenCaptions}
+                  eventOverlayEnabled={eventOverlayEnabled}
+                  onEventOverlayEnabledChange={onEventOverlayEnabledChange}
+                  onOpenEventOverlay={onOpenEventOverlay}
+                />
+              ) : null
+            }
           />
         </div>
       )}

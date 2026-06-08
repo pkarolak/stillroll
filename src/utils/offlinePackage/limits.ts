@@ -23,3 +23,4 @@ export const SLIDE_ARCHIVE_PATH_RE =
   /^slides\/[0-9]{3}-[a-zA-Z0-9._-]+\.(jpe?g|png|webp|gif)$/i
 
 export const MANIFEST_FILENAME = 'manifest.json'
+export const OVERLAY_FILENAME = 'overlay.png'

@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { LanguageContext, type LanguageContextValue } from './languageContext'
 import { trackLanguageChanged } from '../utils/analytics'
-import { detectLanguage, photoCount, translations } from './translations'
+import {
+  captionsProgress,
+  detectLanguage,
+  photoCount,
+  translations,
+} from './translations'
 import type { Language } from './types'
 
 const STORAGE_KEY = 'stillroll-language'
@@ -42,6 +47,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       setLanguage,
       t: translations[language],
       photos: (count: number) => photoCount(count, language),
+      captionsProgress: (filled: number, total: number) =>
+        captionsProgress(filled, total, language),
     }),
     [language, setLanguage],
   )

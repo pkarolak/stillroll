@@ -11,16 +11,24 @@ import {
 } from '../utils/analytics'
 import { transformToCss } from '../utils/parseOrientation'
 import { SlideControls } from './SlideControls'
+import { SlideCaptionOverlay } from './SlideCaptionOverlay'
+import { EventOverlay } from './EventOverlay'
 
 type SlideshowProps = {
   slides: Slide[]
   config: SlideshowConfig
+  customEventOverlayUrl?: string | null
   onExit: () => void
 }
 
 const CONTROLS_HIDE_DELAY = 2500
 
-export function Slideshow({ slides, config, onExit }: SlideshowProps) {
+export function Slideshow({
+  slides,
+  config,
+  customEventOverlayUrl,
+  onExit,
+}: SlideshowProps) {
   const { enter, exit } = useFullscreen()
   const {
     slides: slidesState,
@@ -206,6 +214,17 @@ export function Slideshow({ slides, config, onExit }: SlideshowProps) {
           </div>
         ))}
       </div>
+
+      <EventOverlay
+        settings={config.eventOverlay}
+        enabled={config.eventOverlayEnabled}
+        customImageUrl={customEventOverlayUrl}
+      />
+
+      <SlideCaptionOverlay
+        caption={currentSlide?.caption}
+        visible={config.captionsEnabled}
+      />
 
       <SlideControls
         visible={controlsVisible}

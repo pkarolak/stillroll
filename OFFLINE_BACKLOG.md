@@ -75,3 +75,9 @@ npm run dev     # eksport/import .stillroll, drag-and-drop
 ```
 
 **Flow MVP:** folder → Eksportuj pakiet `.stillroll` → na evencie Otwórz pakiet lub double-click (PWA + Chrome/Edge).
+
+---
+
+## Inne backlogi
+
+- [`MOBILE_BACKLOG.md`](MOBILE_BACKLOG.md) — galeria zdjęć na iOS/Android (Wybrane / Wszystkie), Capacitor — **na kiedyś**

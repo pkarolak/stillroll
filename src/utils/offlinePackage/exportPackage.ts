@@ -1,4 +1,5 @@
-import type { ImageEntry, SlideshowConfig } from '../../types'
+import type { ImageEntry, SlideCaption, SlideshowConfig } from '../../types'
+import { normalizeCaption } from '../captionUtils'
 import { naturalCompare } from '../naturalSort'
 import { resolveSlideFile } from '../slideSource'
 import { shuffle } from '../shuffle'
@@ -15,6 +16,8 @@ export type ExportPackageOptions = {
   name: string
   entries: ImageEntry[]
   config: SlideshowConfig
+  captionsByPath?: Record<string, SlideCaption>
+  customOverlayBlob?: Blob | null
   quality: ExportQuality
   onProgress: (done: number, total: number) => void
 }
@@ -65,7 +68,12 @@ export async function exportStillrollPackage(
     }
     const id = String(i + 1).padStart(3, '0')
 
-    slideEntries.push({ id, filename: archiveName })
+    const caption = normalizeCaption(options.captionsByPath?.[entry.path])
+    slideEntries.push({
+      id,
+      filename: archiveName,
+      ...(caption ? { caption } : {}),
+    })
     workerSlides.push({
       archiveName,
       mime,
@@ -76,7 +84,21 @@ export async function exportStillrollPackage(
 
   const manifest = buildManifest(options.name, options.config, slideEntries)
 
-  return runExportInWorker(manifest, workerSlides, options.onProgress)
+  let overlayBuffer: ArrayBuffer | undefined
+  if (
+    options.config.eventOverlayEnabled &&
+    options.config.eventOverlay?.templateId === 'custom' &&
+    options.customOverlayBlob
+  ) {
+    overlayBuffer = await options.customOverlayBlob.arrayBuffer()
+  }
+
+  return runExportInWorker(
+    manifest,
+    workerSlides,
+    options.onProgress,
+    overlayBuffer,
+  )
 }
 
 export function downloadStillrollPackage(blob: Blob, filename: string): void {

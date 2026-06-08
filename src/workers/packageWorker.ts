@@ -4,6 +4,7 @@ import {
   EVENT_JPEG_QUALITY,
   EVENT_MAX_EDGE,
   MANIFEST_FILENAME,
+  OVERLAY_FILENAME,
 } from '../utils/offlinePackage/limits'
 import {
   parseManifestJson,
@@ -30,7 +31,11 @@ type WorkerIn =
       quality: ExportQuality
       buffer: ArrayBuffer
     }
-  | { type: 'export-finalize'; manifest: StillrollManifest }
+  | {
+      type: 'export-finalize'
+      manifest: StillrollManifest
+      overlayBuffer?: ArrayBuffer
+    }
   | { type: 'import'; archiveSize: number; buffer: ArrayBuffer }
 
 type WorkerOut =
@@ -40,6 +45,7 @@ type WorkerOut =
       type: 'import-done'
       manifest: StillrollManifest
       slides: Array<{ filename: string; buffer: ArrayBuffer; mime: string }>
+      overlayBuffer?: ArrayBuffer
     }
   | { type: 'error'; code: string }
 
@@ -90,7 +96,10 @@ async function processSlide(
   exportFiles[archiveName] = new Uint8Array(buffer)
 }
 
-function finalizeExport(manifest: StillrollManifest): Promise<ArrayBuffer> {
+function finalizeExport(
+  manifest: StillrollManifest,
+  overlayBuffer?: ArrayBuffer,
+): Promise<ArrayBuffer> {
   const payload: Record<string, Uint8Array> = {
     [MANIFEST_FILENAME]: strToU8(serializeManifest(manifest)),
   }
@@ -99,6 +108,10 @@ function finalizeExport(manifest: StillrollManifest): Promise<ArrayBuffer> {
     const data = exportFiles[slide.filename]
     if (!data) throw new Error('EXPORT_MISSING_SLIDE')
     payload[slide.filename] = data
+  }
+
+  if (overlayBuffer && overlayBuffer.byteLength > 0) {
+    payload[OVERLAY_FILENAME] = new Uint8Array(overlayBuffer)
   }
 
   return new Promise((resolve, reject) => {
@@ -162,10 +175,25 @@ function importArchive(archiveSize: number, buffer: ArrayBuffer) {
         }
       })
 
+      let overlayBuffer: ArrayBuffer | undefined
+      const overlayBytes = extracted[OVERLAY_FILENAME]
+      if (overlayBytes) {
+        overlayBuffer = overlayBytes.buffer.slice(
+          overlayBytes.byteOffset,
+          overlayBytes.byteOffset + overlayBytes.byteLength,
+        ) as ArrayBuffer
+      } else if (
+        manifest.config.eventOverlayEnabled &&
+        manifest.config.eventOverlay?.templateId === 'custom'
+      ) {
+        throw new Error('MANIFEST_MISSING_FILES')
+      }
+
       postMessage({
         type: 'import-done',
         manifest,
         slides,
+        ...(overlayBuffer ? { overlayBuffer } : {}),
       } satisfies WorkerOut)
     } catch (error) {
       const code = error instanceof Error ? error.message : 'IMPORT_FAILED'
@@ -203,7 +231,7 @@ self.onmessage = async (event: MessageEvent<WorkerIn>) => {
     }
 
     if (msg.type === 'export-finalize') {
-      const zipBuffer = await finalizeExport(msg.manifest)
+      const zipBuffer = await finalizeExport(msg.manifest, msg.overlayBuffer)
       postMessage({ type: 'export-done', buffer: zipBuffer } satisfies WorkerOut)
       return
     }

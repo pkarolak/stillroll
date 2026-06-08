@@ -8,6 +8,7 @@ type WorkerOut =
       type: 'import-done'
       manifest: StillrollManifest
       slides: Array<{ filename: string; buffer: ArrayBuffer; mime: string }>
+      overlayBuffer?: ArrayBuffer
     }
   | { type: 'error'; code: string }
 
@@ -56,6 +57,7 @@ export async function runExportInWorker(
     buffer: ArrayBuffer
   }>,
   onProgress: (done: number, total: number) => void,
+  overlayBuffer?: ArrayBuffer,
 ): Promise<Blob> {
   const worker = createWorker()
   try {
@@ -81,7 +83,16 @@ export async function runExportInWorker(
     }
 
     const pending = waitForMessage(worker, 'export-done')
-    worker.postMessage({ type: 'export-finalize', manifest })
+    const finalizeMsg = {
+      type: 'export-finalize' as const,
+      manifest,
+      ...(overlayBuffer ? { overlayBuffer } : {}),
+    }
+    if (overlayBuffer) {
+      worker.postMessage(finalizeMsg, [overlayBuffer])
+    } else {
+      worker.postMessage(finalizeMsg)
+    }
     const result = await pending
     return new Blob([result.buffer], { type: 'application/zip' })
   } finally {
@@ -94,6 +105,7 @@ export async function runImportInWorker(
 ): Promise<{
   manifest: StillrollManifest
   slides: Array<{ filename: string; buffer: ArrayBuffer; mime: string }>
+  overlayBuffer?: ArrayBuffer
 }> {
   const worker = createWorker()
   try {
@@ -104,7 +116,11 @@ export async function runImportInWorker(
       [buffer],
     )
     const result = await pending
-    return { manifest: result.manifest, slides: result.slides }
+    return {
+      manifest: result.manifest,
+      slides: result.slides,
+      ...(result.overlayBuffer ? { overlayBuffer: result.overlayBuffer } : {}),
+    }
   } finally {
     worker.terminate()
   }

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Loader2, PackageOpen, Play } from 'lucide-react'
 import { Button } from '../ui/Button'
 import type { ImportedPackage } from '../../utils/offlinePackage/importPackage'
@@ -11,6 +12,7 @@ type PackageSectionProps = {
   onOpenPackage: (file: File) => void
   onStart: () => void
   onCancel: () => void
+  advancedSettings?: ReactNode
 }
 
 export function PackageSection({
@@ -21,6 +23,7 @@ export function PackageSection({
   onOpenPackage,
   onStart,
   onCancel,
+  advancedSettings,
 }: PackageSectionProps) {
   const { t, photos } = useLanguage()
 
@@ -62,6 +65,7 @@ export function PackageSection({
               </span>
             </div>
           </div>
+          {advancedSettings}
           <div className="actions">
             <Button variant="primary" block onClick={onStart} disabled={starting}>
               {starting ? (

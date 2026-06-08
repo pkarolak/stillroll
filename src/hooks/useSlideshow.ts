@@ -69,7 +69,12 @@ export function useSlideshow(slides: Slide[], config: SlideshowConfig) {
             revokeSlideUrls(prevSlides)
             loadingRef.current.clear()
             return shuffle(
-              prevSlides.map((s) => ({ ...s, url: '', orientation: undefined })),
+              prevSlides.map((s) => ({
+                ...s,
+                url: '',
+                orientation: undefined,
+                caption: s.caption,
+              })),
             )
           })
         })

@@ -51,6 +51,10 @@ describe('validateExtractedEntry', () => {
   it('rejects unexpected paths', () => {
     expect(() => validateExtractedEntry('evil.exe', 100)).toThrow('ZIP_UNEXPECTED_PATH')
   })
+
+  it('allows overlay.png', () => {
+    expect(() => validateExtractedEntry('overlay.png', 100)).not.toThrow()
+  })
 })
 
 describe('parseManifestJson', () => {
@@ -65,6 +69,67 @@ describe('parseManifestJson', () => {
       }),
     )
     expect(manifest.name).toBe('Test')
+    expect(manifest.config.captionsEnabled).toBe(false)
+    expect(manifest.config.eventOverlayEnabled).toBe(false)
+  })
+
+  it('parses manifest with event overlay', () => {
+    const manifest = parseManifestJson(
+      JSON.stringify({
+        stillrollPackage: 1,
+        name: 'Overlay',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        config: {
+          duration: 6,
+          order: 'folder',
+          correctOrientation: true,
+          eventOverlayEnabled: true,
+          eventOverlay: {
+            templateId: 'wedding',
+            text: 'Wesele Asi i Piotra',
+          },
+        },
+        slides: [{ id: '1', filename: 'slides/001-a.jpg' }],
+      }),
+    )
+    expect(manifest.config.eventOverlayEnabled).toBe(true)
+    expect(manifest.config.eventOverlay).toEqual({
+      templateId: 'wedding',
+      text: 'Wesele Asi i Piotra',
+    })
+  })
+
+  it('parses manifest with slide captions', () => {
+    const manifest = parseManifestJson(
+      JSON.stringify({
+        stillrollPackage: 1,
+        name: 'Captions',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        config: {
+          duration: 6,
+          order: 'folder',
+          correctOrientation: true,
+          captionsEnabled: true,
+        },
+        slides: [
+          {
+            id: '1',
+            filename: 'slides/001-a.jpg',
+            caption: {
+              date: 'Marzec 2025',
+              place: 'Fuerteventura',
+              text: 'Wakacje',
+            },
+          },
+        ],
+      }),
+    )
+    expect(manifest.config.captionsEnabled).toBe(true)
+    expect(manifest.slides[0].caption).toEqual({
+      date: 'Marzec 2025',
+      place: 'Fuerteventura',
+      text: 'Wakacje',
+    })
   })
 
   it('rejects unsupported version', () => {

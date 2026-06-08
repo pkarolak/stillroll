@@ -3,6 +3,7 @@ import { AppTopBar } from './components/AppTopBar'
 import { SetupFlow } from './components/SetupFlow'
 import { Slideshow } from './components/Slideshow'
 import type { Slide, SlideshowConfig } from './types'
+import { DEFAULT_SLIDESHOW_CONFIG } from './types'
 
 type AppView = 'setup' | 'slideshow'
 
@@ -11,20 +12,28 @@ function App() {
   const [slides, setSlides] = useState<Slide[]>([])
   const [sessionKey, setSessionKey] = useState(0)
   const [setupKey, setSetupKey] = useState(0)
-  const [config, setConfig] = useState<SlideshowConfig>({
-    duration: 6,
-    order: 'folder',
-    correctOrientation: true,
-  })
+  const [config, setConfig] = useState<SlideshowConfig>(DEFAULT_SLIDESHOW_CONFIG)
+  const [customEventOverlayUrl, setCustomEventOverlayUrl] = useState<
+    string | null
+  >(null)
 
-  const handleStart = (newSlides: Slide[], newConfig: SlideshowConfig) => {
+  const handleStart = (
+    newSlides: Slide[],
+    newConfig: SlideshowConfig,
+    options?: { customEventOverlayUrl?: string | null },
+  ) => {
     setSlides(newSlides)
     setConfig(newConfig)
+    setCustomEventOverlayUrl(options?.customEventOverlayUrl ?? null)
     setSessionKey((k) => k + 1)
     setView('slideshow')
   }
 
   const handleExit = () => {
+    if (customEventOverlayUrl) {
+      URL.revokeObjectURL(customEventOverlayUrl)
+    }
+    setCustomEventOverlayUrl(null)
     setView('setup')
     setSlides([])
     setSetupKey((k) => k + 1)
@@ -36,6 +45,7 @@ function App() {
         key={sessionKey}
         slides={slides}
         config={config}
+        customEventOverlayUrl={customEventOverlayUrl}
         onExit={handleExit}
       />
     )
