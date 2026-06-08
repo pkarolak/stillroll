@@ -32,6 +32,8 @@ export function useSlideshow(slides: Slide[], config: SlideshowConfig) {
     slidesRef.current = slidesState
   }, [slidesState])
 
+  const slidePathsKey = slidesState.map((s) => s.path).join('\0')
+
   const goTo = useCallback(
     (index: number) => {
       setCurrentIndex(wrapIndex(index, slidesState.length))
@@ -147,7 +149,7 @@ export function useSlideshow(slides: Slide[], config: SlideshowConfig) {
     return () => {
       cancelled = true
     }
-  }, [currentIndex, slidesState.length])
+  }, [currentIndex, slidesState.length, slidePathsKey])
 
   useEffect(() => {
     if (!config.correctOrientation || slidesState.length === 0) return
@@ -180,7 +182,7 @@ export function useSlideshow(slides: Slide[], config: SlideshowConfig) {
     return () => {
       cancelled = true
     }
-  }, [currentIndex, config.correctOrientation, slidesState.length])
+  }, [currentIndex, config.correctOrientation, slidesState.length, slidePathsKey])
 
   const currentSlide = slidesState[currentIndex]
   const currentUrl = currentSlide?.url ?? ''
