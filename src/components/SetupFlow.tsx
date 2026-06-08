@@ -57,6 +57,7 @@ import {
 import {
   hasEventOverlayContent,
   normalizeEventOverlay,
+  overlayMimeFromBuffer,
 } from '../utils/eventOverlayUtils'
 import { MainSetupScreen } from './setup/MainSetupScreen'
 import { PrepareWizard, type PrepareStep } from './setup/PrepareWizard'
@@ -182,7 +183,7 @@ export function SetupFlow({ onStart }: SetupFlowProps) {
     if (customOverlayUrl) return customOverlayUrl
     if (imported?.customOverlayBuffer) {
       const blob = new Blob([imported.customOverlayBuffer], {
-        type: 'image/png',
+        type: overlayMimeFromBuffer(imported.customOverlayBuffer),
       })
       return URL.createObjectURL(blob)
     }
@@ -316,7 +317,9 @@ export function SetupFlow({ onStart }: SetupFlowProps) {
           setEventOverlayEnabled(manifestConfig.eventOverlayEnabled)
           applyCustomOverlayBlob(
             result.customOverlayBuffer
-              ? new Blob([result.customOverlayBuffer], { type: 'image/png' })
+              ? new Blob([result.customOverlayBuffer], {
+                  type: overlayMimeFromBuffer(result.customOverlayBuffer),
+                })
               : null,
           )
         }
@@ -334,7 +337,9 @@ export function SetupFlow({ onStart }: SetupFlowProps) {
               : null) ??
             (result.customOverlayBuffer
               ? URL.createObjectURL(
-                  new Blob([result.customOverlayBuffer], { type: 'image/png' }),
+                  new Blob([result.customOverlayBuffer], {
+                    type: overlayMimeFromBuffer(result.customOverlayBuffer),
+                  }),
                 )
               : null)
           await startFromSlides(

@@ -23,26 +23,28 @@ export type EventOverlayTemplateMeta = {
   fontWeight: number
   textColor: string
   textShadow?: string
+  textPlacement?: 'banner' | 'ribbon-corner'
 }
 
 export const EVENT_OVERLAY_TEMPLATES: EventOverlayTemplateMeta[] = [
   {
     id: 'birthday',
     nameKey: 'eventOverlayBirthday',
-    imageUrl: '/overlays/birthday.png',
+    imageUrl: '/overlays/birthday.svg',
     anchor: 'top',
-    overlapVh: 14,
+    overlapVh: 13,
     safeZone: { centerWidthPercent: 55 },
-    textTop: 4.5,
-    textLeft: 40,
-    textRight: 40,
-    textHeight: 13,
-    imageAspectRatio: 1024 / 512,
-    fontFamily: "'Fredoka', cursive",
-    fontSize: 'clamp(0.95rem, 2.4vw, 1.75rem)',
+    textTop: 0,
+    textLeft: 0,
+    textRight: 0,
+    textHeight: 0,
+    imageAspectRatio: 1728 / 1117,
+    fontFamily: "'Nunito', system-ui, sans-serif",
+    fontSize: 'clamp(0.65rem, 1.5vw, 1.12rem)',
     fontWeight: 600,
     textColor: '#fffef8',
-    textShadow: '0 1px 3px rgba(0,0,0,0.35)',
+    textShadow: '0 1px 3px rgba(0,0,0,0.45)',
+    textPlacement: 'ribbon-corner',
   },
   {
     id: 'wedding',
@@ -117,6 +119,19 @@ export const EVENT_OVERLAY_TEMPLATES: EventOverlayTemplateMeta[] = [
     textShadow: '0 1px 2px rgba(255,255,255,0.5)',
   },
 ]
+
+/** Presets shown in the editor UI (hide others until assets are ready). */
+export const VISIBLE_EVENT_OVERLAY_TEMPLATE_IDS = [
+  'birthday',
+] as const satisfies readonly Exclude<EventOverlayTemplateId, 'custom'>[]
+
+export function getVisibleEventOverlayTemplates(): EventOverlayTemplateMeta[] {
+  return EVENT_OVERLAY_TEMPLATES.filter((template) =>
+    (VISIBLE_EVENT_OVERLAY_TEMPLATE_IDS as readonly string[]).includes(
+      template.id,
+    ),
+  )
+}
 
 export function getEventOverlayTemplate(
   id: EventOverlayTemplateId,

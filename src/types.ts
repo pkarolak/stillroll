@@ -29,9 +29,35 @@ export type EventOverlayTemplateId =
   | 'graduation'
   | 'custom'
 
+export type EventOverlayRibbonAlign = 'left' | 'center' | 'right'
+
+export type EventOverlayRibbonFontId =
+  | 'nunito'
+  | 'oswald'
+  | 'lora'
+  | 'caveat'
+  | 'dm-serif'
+
+export type EventOverlayRibbonColorId =
+  | 'pink'
+  | 'gold'
+  | 'blue'
+  | 'red'
+  | 'purple'
+
+export type EventOverlayRibbonSizeId = 'sm' | 'md' | 'lg'
+
+export type EventOverlayRibbonStyle = {
+  colorId?: EventOverlayRibbonColorId
+  fontId?: EventOverlayRibbonFontId
+  align?: EventOverlayRibbonAlign
+  sizeId?: EventOverlayRibbonSizeId
+}
+
 export type EventOverlaySettings = {
   templateId: EventOverlayTemplateId
   text: string
+  ribbon?: EventOverlayRibbonStyle
 }
 
 export type SlideshowConfig = {

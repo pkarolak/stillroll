@@ -117,4 +117,30 @@ export type Translations = {
   eventOverlayUploadNotPng: string
   eventOverlayUploadTooLarge: string
   eventOverlayPreviewLabel: string
+  eventOverlayRibbonHeading: string
+  eventOverlayRibbonColor: string
+  eventOverlayRibbonFont: string
+  eventOverlayRibbonAlign: string
+  eventOverlayRibbonSize: string
+  eventOverlayRibbonColorPink: string
+  eventOverlayRibbonColorGold: string
+  eventOverlayRibbonColorBlue: string
+  eventOverlayRibbonColorRed: string
+  eventOverlayRibbonColorPurple: string
+  eventOverlayRibbonFontNunito: string
+  eventOverlayRibbonFontOswald: string
+  eventOverlayRibbonFontLora: string
+  eventOverlayRibbonFontCaveat: string
+  eventOverlayRibbonFontDmSerif: string
+  eventOverlayRibbonFontHintNunito: string
+  eventOverlayRibbonFontHintOswald: string
+  eventOverlayRibbonFontHintLora: string
+  eventOverlayRibbonFontHintCaveat: string
+  eventOverlayRibbonFontHintDmSerif: string
+  eventOverlayRibbonAlignLeft: string
+  eventOverlayRibbonAlignCenter: string
+  eventOverlayRibbonAlignRight: string
+  eventOverlayRibbonSizeSm: string
+  eventOverlayRibbonSizeMd: string
+  eventOverlayRibbonSizeLg: string
 }

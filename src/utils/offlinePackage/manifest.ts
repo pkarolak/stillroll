@@ -5,7 +5,7 @@ import type {
   SlideshowConfig,
 } from '../../types'
 import { MAX_CAPTION_FIELD_LENGTH } from '../captionUtils'
-import { trimEventOverlayText } from '../eventOverlayUtils'
+import { normalizeEventOverlay, trimEventOverlayText } from '../eventOverlayUtils'
 import { MAX_MANIFEST_BYTES, MAX_SLIDES } from './limits'
 
 export const STILLROLL_PACKAGE_VERSION = 1 as const
@@ -50,10 +50,15 @@ function parseEventOverlay(raw: unknown): EventOverlaySettings | undefined {
   }
   const text =
     typeof o.text === 'string' ? trimEventOverlayText(o.text) : ''
-  return {
+  const ribbon =
+    o.ribbon && typeof o.ribbon === 'object'
+      ? (o.ribbon as EventOverlaySettings['ribbon'])
+      : undefined
+  return normalizeEventOverlay({
     templateId: o.templateId as EventOverlayTemplateId,
     text,
-  }
+    ribbon,
+  })
 }
 
 function parseSlideCaption(raw: unknown): SlideCaption | undefined {
