@@ -2,9 +2,12 @@ import exifr from 'exifr'
 import { isRawImageFile } from './imageFormats'
 
 export class RawPreviewUnavailableError extends Error {
-  constructor(readonly filename: string) {
+  filename: string
+
+  constructor(filename: string) {
     super('RAW_NO_PREVIEW')
     this.name = 'RawPreviewUnavailableError'
+    this.filename = filename
   }
 }
 
@@ -17,7 +20,8 @@ export async function resolveDisplayableBlob(file: File): Promise<Blob> {
     throw new RawPreviewUnavailableError(file.name)
   }
 
-  return new Blob([thumb], { type: 'image/jpeg' })
+  const bytes = thumb instanceof Uint8Array ? thumb : new Uint8Array(thumb)
+  return new Blob([Uint8Array.from(bytes)], { type: 'image/jpeg' })
 }
 
 export async function resolveDisplayableFile(file: File): Promise<File> {
