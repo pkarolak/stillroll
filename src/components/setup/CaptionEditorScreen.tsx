@@ -5,6 +5,7 @@ import { useLanguage } from '../../i18n/useLanguage'
 import { batchExtractCaptionHints } from '../../utils/extractCaptionHints'
 import { naturalCompare } from '../../utils/naturalSort'
 import { resolveSlideFile } from '../../utils/slideSource'
+import { resolveDisplayableBlob } from '../../utils/resolveDisplayableImage'
 import { hasCaptionContent } from '../../utils/captionUtils'
 import { Button } from '../ui/Button'
 import { CaptionPreviewModal } from './CaptionPreviewModal'
@@ -57,7 +58,9 @@ export function CaptionEditorScreen({
             handle: entry.handle,
           })
           if (cancelled) return
-          urls[entry.path] = URL.createObjectURL(file)
+          const blob = await resolveDisplayableBlob(file)
+          if (cancelled) return
+          urls[entry.path] = URL.createObjectURL(blob)
           setThumbUrls((prev) => ({ ...prev, [entry.path]: urls[entry.path] }))
         } catch {
           // skip broken thumb

@@ -1,6 +1,8 @@
 import type { ImageEntry, SlideCaption, SlideshowConfig } from '../../types'
 import { normalizeCaption } from '../captionUtils'
 import { naturalCompare } from '../naturalSort'
+import { isRawImageFile } from '../imageFormats'
+import { resolveDisplayableFile } from '../resolveDisplayableImage'
 import { resolveSlideFile } from '../slideSource'
 import { shuffle } from '../shuffle'
 import type { ExportQuality } from '../../workers/packageWorker'
@@ -51,18 +53,20 @@ export async function exportStillrollPackage(
 
   for (let i = 0; i < sorted.length; i++) {
     const entry = sorted[i]
-    const file = await resolveSlideFile({
+    const sourceFile = await resolveSlideFile({
       path: entry.path,
       url: '',
       file: entry.file,
       handle: entry.handle,
     })
 
+    const file = await resolveDisplayableFile(sourceFile)
     const mime = file.type || 'image/jpeg'
     let archiveName = slideArchiveName(i, basename(entry.path))
+    const isGif = archiveName.toLowerCase().endsWith('.gif')
     if (
-      options.quality === 'event' &&
-      !archiveName.toLowerCase().endsWith('.gif')
+      isRawImageFile(basename(entry.path)) ||
+      (options.quality === 'event' && !isGif)
     ) {
       archiveName = archiveName.replace(/\.[^.]+$/, '.jpg')
     }

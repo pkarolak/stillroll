@@ -13,14 +13,21 @@ const IMAGE_EXTENSIONS = new Set([
   '.tiff',
 ])
 
+/** Nikon RAW — shown via embedded JPEG preview extracted with exifr. */
+const RAW_IMAGE_EXTENSIONS = new Set(['.nef', '.nrw'])
+
 export function getExtension(filename: string): string {
   const dot = filename.lastIndexOf('.')
   if (dot === -1) return ''
   return filename.slice(dot).toLowerCase()
 }
 
-export function isImageFile(filename: string): boolean {
-  return IMAGE_EXTENSIONS.has(getExtension(filename))
+export function isRawImageFile(filename: string): boolean {
+  return RAW_IMAGE_EXTENSIONS.has(getExtension(filename))
 }
 
-export const IMAGE_EXTENSIONS_LIST = [...IMAGE_EXTENSIONS]
+export function isImageFile(filename: string): boolean {
+  return IMAGE_EXTENSIONS.has(getExtension(filename)) || isRawImageFile(filename)
+}
+
+export const IMAGE_EXTENSIONS_LIST = [...IMAGE_EXTENSIONS, ...RAW_IMAGE_EXTENSIONS]

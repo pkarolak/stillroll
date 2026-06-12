@@ -20,6 +20,7 @@ import { loadSavedFolder, pickFolder } from '../utils/collectImages'
 import { clearFolderHandle } from '../utils/folderStorage'
 import { naturalCompare } from '../utils/naturalSort'
 import { resolveSlideFile } from '../utils/slideSource'
+import { resolveDisplayableBlob } from '../utils/resolveDisplayableImage'
 import { shuffle } from '../utils/shuffle'
 import {
   trackFolderSelected,
@@ -267,7 +268,8 @@ export function SetupFlow({ onStart }: SetupFlowProps) {
       setStarting(true)
       try {
         const file = await resolveSlideFile(slides[0])
-        slides[0].url = URL.createObjectURL(file)
+        const blob = await resolveDisplayableBlob(file)
+        slides[0].url = URL.createObjectURL(blob)
         trackSlideshowStarted(slides.length, config)
         onStart(slides, config, options)
       } catch {

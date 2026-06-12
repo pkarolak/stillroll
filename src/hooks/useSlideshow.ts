@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Slide, SlideshowConfig } from '../types'
 import { getOrientation } from '../utils/parseOrientation'
 import { resolveSlideFile } from '../utils/slideSource'
+import { resolveDisplayableBlob } from '../utils/resolveDisplayableImage'
 import { shuffle } from '../utils/shuffle'
 
 /** Tylko bieżący slajd + 1 w każdą stronę mają aktywny blob URL */
@@ -132,9 +133,10 @@ export function useSlideshow(slides: Slide[], config: SlideshowConfig) {
       loadingRef.current.add(i)
 
       void resolveSlideFile(slide)
-        .then((file) => {
+        .then((file) => resolveDisplayableBlob(file))
+        .then((blob) => {
           if (cancelled) return
-          const url = URL.createObjectURL(file)
+          const url = URL.createObjectURL(blob)
           setSlidesState((prev) => {
             if (prev[i]?.url) {
               URL.revokeObjectURL(url)
