@@ -13,7 +13,7 @@ const IMAGE_EXTENSIONS = new Set([
   '.tiff',
 ])
 
-/** Nikon RAW — shown via embedded JPEG preview extracted with exifr. */
+/** Nikon RAW — shown via embedded JPEG preview scanned from file bytes. */
 const RAW_IMAGE_EXTENSIONS = new Set(['.nef', '.nrw'])
 
 export function getExtension(filename: string): string {
