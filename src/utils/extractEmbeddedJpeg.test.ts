@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { extractLargestEmbeddedJpeg } from './extractEmbeddedJpeg'
+import { existsSync, readFileSync } from 'fs'
+import {
+  extractLargestEmbeddedJpeg,
+  extractRawPreviewJpeg,
+  findTiffEmbeddedJpegRange,
+} from './extractEmbeddedJpeg'
 
 const TINY_JPEG = Uint8Array.from(
   atob(
@@ -42,5 +47,24 @@ describe('extractLargestEmbeddedJpeg', () => {
     const raw = new Uint8Array([...pad(32), ...TINY_JPEG, ...pad(16)])
     const extracted = extractLargestEmbeddedJpeg(raw)
     expect(extracted).toEqual(TINY_JPEG)
+  })
+})
+
+const SAMPLE_NEF = '/Users/patryk/Downloads/_DSC5554.NEF'
+
+describe('NEF integration', () => {
+  it.skipIf(!existsSync(SAMPLE_NEF))('finds full-size preview via TIFF SubIFD tags', () => {
+    const file = readFileSync(SAMPLE_NEF)
+    const header = file.subarray(0, 512 * 1024)
+    const range = findTiffEmbeddedJpegRange(header, file.byteLength)
+
+    expect(range).not.toBeNull()
+    expect(range!.offset).toBe(1_175_552)
+    expect(range!.length).toBe(1_434_000)
+
+    const preview = extractRawPreviewJpeg(file, file.byteLength)
+    expect(preview?.byteLength).toBe(range!.length)
+    expect(preview?.[0]).toBe(0xff)
+    expect(preview?.[1]).toBe(0xd8)
   })
 })
